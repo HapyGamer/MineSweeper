@@ -17,13 +17,16 @@
                 <SymbolIcon Symbol="Emoji"/>
             </StackPanel>
         </Button>
-        <StackPanel Background="Blue"
-                    Height="600"
-                    Width="Auto"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Stretch"
-                    Margin="30,30">
-        </StackPanel>
+        <Grid Background="Blue"
+              Height="600"
+              Width="Auto"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Stretch"
+              Margin="30,30"
+              x:Name="MainGrid"
+              >
+            
+        </Grid>
         
 
     </Grid>

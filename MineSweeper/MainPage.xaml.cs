@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
 
 namespace MineSweeper
 {
@@ -22,6 +22,9 @@ namespace MineSweeper
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
+		public int tileSize = 10;
+
         public MainPage()
         {
             this.InitializeComponent();
