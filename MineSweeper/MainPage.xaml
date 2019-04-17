@@ -8,25 +8,38 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="NewGameButton"
-                Margin="0,30"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Center"
-                Click="StartNewGame">
-            <StackPanel>
-                <SymbolIcon Symbol="Emoji"/>
-            </StackPanel>
-        </Button>
-        <Grid Background="Blue"
-              Height="600"
-              Width="Auto"
-              VerticalAlignment="Bottom"
+        <StackPanel Margin="0,0,0,630">
+            <Button x:Name="NewGameButton"
+                    Margin="0,30"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Click="StartNewGame">
+                <StackPanel>
+                    <SymbolIcon Symbol="Emoji"/>
+                </StackPanel>
+            </Button>
+            <TextBox Margin="100,-100,0,0"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     x:Name="Height"/>
+            <TextBox Margin="200,-100,0,0"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     x:Name="Width"/>
+        </StackPanel>
+        <GridView Background="LightGray"
+              VerticalAlignment="Stretch"
               HorizontalAlignment="Stretch"
-              Margin="30,30"
-              x:Name="MainGrid"
+              Margin="30,100,30,30"
+              x:Name="MainGrid" 
               >
-            
-        </Grid>
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+        
         
 
     </Grid>

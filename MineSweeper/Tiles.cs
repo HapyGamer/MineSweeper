@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineSweeper
 {
-    public struct Tiles
+    public class Tiles
     {
 		public bool hasBomb;
 		public int howManyBombsNear;
