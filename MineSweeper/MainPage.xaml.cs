@@ -27,7 +27,9 @@ namespace MineSweeper
 
 		public int tileSize = 100;
 		public Color[] numColours = new Color[8];
+		public int bombCount = 10;
 
+		private int tilesOpened;
 		private int gridHeight;
 		private int gridWidth;
 		private bool gameStarted = false;
@@ -72,42 +74,49 @@ namespace MineSweeper
 			int thisXPos = Convert.ToInt32(thisButton.Name.Substring(0, thisButton.Name.IndexOf(',')));
 			int thisYPos = Convert.ToInt32(thisButton.Name.Substring(2, 1));
 			
-			if (!gameOver)
+
+			if (gameStarted && ! gameOver)
 			{
 				thisButton.Background = new SolidColorBrush(Color.FromArgb(255, 80, 120, 120));
-				if (gameStarted)
+				Tiles thisTile = mineGrid.tiles[thisXPos + thisYPos * mineGrid.gridWidth];
+				if (thisTile.hasBomb)
 				{
-					Tiles thisTile = mineGrid.tiles[thisXPos + thisYPos * mineGrid.gridWidth];
-					if (thisTile.hasBomb)
-					{
-						thisButton.Content = thisTile.hasBomb.ToString();
-						GameOver();
-					}
-					else
-					{
-						CheckHowManyBombsNear(thisTile);
-						thisButton.Content = thisTile.howManyBombsNear.ToString();
-					}
+					thisButton.Content = thisTile.hasBomb.ToString();
+					GameOver();
 				}
 				else
 				{
-					//after first tile click add a set number of bombs randomly placed
-					makeMineGrid();
-					//make it so if you clicked a tile with no bombs near it, it automatically clicks all the ones with no bombs until surrounded by ones with bombs near
-					Tiles thisTile = mineGrid.tiles[thisXPos + thisYPos * mineGrid.gridWidth];
 					CheckHowManyBombsNear(thisTile);
+					tilesOpened++;
+					if (gridHeight * gridWidth - tilesOpened <= bombCount)
+					{
+						GameOver();
+					}
 					thisButton.Content = thisTile.howManyBombsNear.ToString();
-					//if bomb near then make that tile show how many bombs near it with a designated colour
-
-					gameStarted = true;
 				}
 			}
+			else
+			{
+				//after first tile click add a set number of bombs randomly placed
+				makeMineGrid();
+				thisButton.Background = new SolidColorBrush(Color.FromArgb(255, 80, 120, 120));
+				//make it so if you clicked a tile with no bombs near it, it automatically clicks all the ones with no bombs until surrounded by ones with bombs near
+				Tiles thisTile = mineGrid.tiles[thisXPos + thisYPos * mineGrid.gridWidth];
+				CheckHowManyBombsNear(thisTile);
+				thisButton.Content = thisTile.howManyBombsNear.ToString();
+				//if bomb near then make that tile show how many bombs near it with a designated colour
+
+				gameStarted = true;
+				gameOver = false;
+				tilesOpened = 1;
+			}
+			
 			thisButton.Click -= new RoutedEventHandler(BreakTile);
 		}
 
 		private void makeMineGrid()
 		{
-			mineGrid = new MineGrid(gridHeight, gridWidth, 10);
+			mineGrid = new MineGrid(gridHeight, gridWidth, bombCount);
 		}
 
 		private void GameOver()
@@ -126,6 +135,11 @@ namespace MineSweeper
 			}
 
 			gameOver = true;
+		}
+
+		private void Win()
+		{
+
 		}
 
 		private void CheckHowManyBombsNear(Tiles tile)
